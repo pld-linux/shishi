@@ -144,7 +144,8 @@ rm -f m4/libtool.m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	--with-libgcrypt
 
 %{__make}
 %{__make} extra
