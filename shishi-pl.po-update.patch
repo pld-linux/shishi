@@ -1,15 +1,15 @@
---- shishi-0.0.19/po/pl.po.orig	2004-11-12 02:38:35.000000000 +0100
-+++ shishi-0.0.19/po/pl.po	2004-11-19 00:52:28.595067152 +0100
+--- shishi-0.0.20/po/pl.po.orig	2004-11-21 19:29:08.000000000 +0100
++++ shishi-0.0.20/po/pl.po	2004-11-22 22:58:52.272553264 +0100
 @@ -4,10 +4,10 @@
  #
  msgid ""
  msgstr ""
 -"Project-Id-Version: shishi 0.0.14\n"
-+"Project-Id-Version: shishi 0.0.19\n"
++"Project-Id-Version: shishi 0.0.20\n"
  "Report-Msgid-Bugs-To: bug-shishi@josefsson.org\n"
- "POT-Creation-Date: 2004-11-12 02:38+0100\n"
+ "POT-Creation-Date: 2004-11-21 19:25+0100\n"
 -"PO-Revision-Date: 2004-02-22 21:54+0100\n"
-+"PO-Revision-Date: 2004-11-19 00:50+0100\n"
++"PO-Revision-Date: 2004-11-22 22:53+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "MIME-Version: 1.0\n"
