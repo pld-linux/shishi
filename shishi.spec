@@ -3,25 +3,29 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.0
-Release:	0.3
+Version:	0.0.8
+Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Libraries
-Source0:	http://savannah.nongnu.org/download/shishi/unstable.pkg/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	29441804f9e6f39f549d0dfe7bb25d3e
+Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	49d854d20e9ebe7d85688eeb6e63859e
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-libgcrypt.patch
-Patch2:		%{name}-libidn.patch
-URL:		http://www.nongnu.org/shishi/
+#Patch1:		%{name}-libgcrypt.patch
+#Patch2:		%{name}-libidn.patch
+URL:		http://josefsson.org/shishi/
+BuildRequires:	gnutls-devel >= 0.8.8
 BuildRequires:	gtk-doc >= 0.6
-BuildRequires:	libgcrypt-devel >= 1.1.42
+BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
-BuildRequires:	libtasn1-devel >= 0.2.0
+BuildRequires:	libtasn1-devel >= 0.2.5
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
+# should be moved to shishi-enabled inetutils-* if such packages would exist
+Obsoletes:	shishi-telnet
+Obsoletes:	shishi-telnetd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libexecdir	%{_sbindir}
@@ -58,10 +62,11 @@ Summary:	Header files for Shishi library
 Summary(pl):	Pliki nag³ówkowe biblioteki Shishi
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	gnutls-devel >= 0.8.8
 Requires:	gtk-doc-common
-Requires:	libgcrypt-devel >= 1.1.42
+Requires:	libgcrypt-devel >= 1.1.43
 Requires:	libidn-devel >= 0.1.0
-Requires:	libtasn1-devel >= 0.2.0
+Requires:	libtasn1-devel >= 0.2.5
 
 %description devel
 Header files for Shishi library.
@@ -81,36 +86,12 @@ Static Shishi library.
 %description static -l pl
 Statyczna biblioteka Shishi.
 
-%package telnet
-Summary:	Kerberized Telnet client
-Summary(pl):	Klient skerberyzowanego Telneta
-Group:		Networking/Utilities
-Requires:	%{name} = %{version}
-
-%description telnet
-Kerberized Telnet client.
-
-%description telnet -l pl
-Klient skerberyzowanego Telneta.
-
-%package telnetd
-Summary:	Kerberized DARPA TELNET protocol server
-Summary(pl):	Serwer skerberyzowanego protoko³u DARPA TELNET
-Group:		Networking/Daemons
-PreReq:		rc-inetd
-Requires:	%{name} = %{version}
-
-%description telnetd
-Kerberized DARPA TELNET protocol server.
-
-%description telnetd -l pl
-Serwer skerberyzowanego protoko³u DARPA TELNET.
-
 %package -n pam-pam_shishi
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl):	Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
 Requires:	%{name} = %{version}
+Obsoletes:	pam_shishi
 
 %description -n pam-pam_shishi
 PAM module for RFC 1510 (Kerberos V5) authentication.
@@ -121,19 +102,21 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %configure \
 	--with-html-dir=%{_gtkdocdir}
 
 %{__make}
+%{__make} extra
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+%{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/lib/security
@@ -168,23 +151,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libshishi.so
 %{_libdir}/libshishi.la
-%{_includedir}/shishi.h
+%{_includedir}/shishi*.h
 %{_pkgconfigdir}/shishi.pc
+%{_mandir}/man3/*
 %{_gtkdocdir}/shishi
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libshishi.a
-
-%files telnet
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/shishi-telnet
-%{_mandir}/man1/shishi-telnet.1*
-
-%files telnetd
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/shishi-telnetd
-%{_mandir}/man8/shishi-telnetd.8*
 
 %files -n pam-pam_shishi
 %defattr(644,root,root,755)
