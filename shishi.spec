@@ -22,8 +22,11 @@ BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 0.2.5
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
+BuildRequires:	rpmbuild(macros) >= 1.159
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
+Provides:	group(shishi)
+Provides:	user(shishi)
 # should be moved to shishi-enabled inetutils-* if such packages would exist
 Obsoletes:	shishi-telnet
 Obsoletes:	shishi-telnetd
@@ -92,14 +95,13 @@ Statyczna biblioteka Shishi.
 Summary:	shishid - Kerberos 5 server
 Summary(pl):	shishid - serwer Kerberosa 5
 Group:		Networking/Daemons
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/groupadd
-Requires(pre):	/usr/bin/getgid
-Requires(pre):	/bin/id
-Requires(pre):	/usr/bin/setsid
 Requires(post,postun):	/sbin/chkconfig
-Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description shishid
@@ -176,20 +178,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre shishid
 if [ -n "`/usr/bin/getgid shishi`" ]; then
-	if [ "`getgid shishi`" != "125" ]; then
-		echo "Error: group shishi doesn't have gid=125. Correct this before installing shishid." 1>&2
+	if [ "`/usr/bin/getgid shishi`" != "125" ]; then
+		echo "Error: group shishi doesn't have gid=125. Correct this before installing shishi-shishid." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/groupadd -g 125 -r -f shishi
+	/usr/sbin/groupadd -g 125 shishi 1>&2
 fi
 if [ -n "`/bin/id -u shishi 2>/dev/null`" ]; then
 	if [ "`/bin/id -u shishi`" != "125" ]; then
-		echo "Error: user shishi doesn't have uid=125. Correct this before installing shishid." 1>&2
+		echo "Error: user shishi doesn't have uid=125. Correct this before installing shishi-shishid." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/useradd -u 125 -r -d /usr/share/empty -s /bin/false -c "shishi user" -g shishi shishi 1>&2
+	/usr/sbin/useradd -u 125 -d /usr/share/empty -s /bin/false \
+		-c "shishi user" -g shishi shishi 1>&2
 fi
 
 %post shishid
@@ -210,8 +213,8 @@ fi
 
 %postun shishid
 if [ "$1" = "0" ]; then
-	/usr/sbin/userdel shishi
-	/usr/sbin/groupdel shishi
+	%userremove shishi
+	%groupremove shishi
 fi
 
 %files -f %{name}.lang
