@@ -2,7 +2,7 @@ Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
 Version:	0.0.14
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL
 Group:		Libraries
@@ -134,6 +134,9 @@ rm -f po/stamp-po
 %{__perl} -pi -e 's/AC_LIBTOOL_TAGS//' configure.ac
 # incompatible with ksh
 rm -f m4/libtool.m4
+
+# doesn't build on sparc (too few B* constants) and wasn't packaged anyway
+%{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
 
 %build
 # blegh, lt incompatible with ksh - must rebuild
