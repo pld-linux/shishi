@@ -1,22 +1,25 @@
 # TODO:
-# - init scripts for shishid and shishi-telnetd
+# - init scripts for shishid
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.8
+Version:	0.0.9
 Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	49d854d20e9ebe7d85688eeb6e63859e
+# Source0-md5:	eb4b35415b3c809dc6b334f20335e46c
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake >= 1.8
 BuildRequires:	gnutls-devel >= 0.8.8
-BuildRequires:	gtk-doc >= 0.6
+BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 0.2.5
+BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
@@ -26,6 +29,7 @@ Obsoletes:	shishi-telnetd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libexecdir	%{_sbindir}
+%define		_localstatedir	%{_var}/lib
 
 %description
 Shishi is a (still incomplete) implementation of the RFC 1510(bis)
@@ -100,9 +104,19 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %setup -q
 %patch0 -p1
 
+# we don't have libtool 1.5a
+%{__perl} -pi -e 's/AC_LIBTOOL_TAGS//' configure.ac
+# incompatible with ksh
+rm -f m4/libtool.m4
+
 %build
-%configure \
-	--with-html-dir=%{_gtkdocdir}
+# blegh, lt incompatible with ksh - must rebuild
+%{__libtoolize}
+%{__aclocal} -I gl/m4 -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure
 
 %{__make}
 %{__make} extra
@@ -135,27 +149,32 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ANNOUNCE AUTHORS ChangeLog NEWS README* THANKS
+%doc AUTHORS ChangeLog NEWS README* THANKS
+%attr(755,root,root) %{_bindir}/shisa
 %attr(755,root,root) %{_bindir}/shishi
 %attr(755,root,root) %{_sbindir}/shishid
-%attr(755,root,root) %{_libdir}/libshishi.so.*.*.*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi.conf
-%{_datadir}/%{name}
+%attr(755,root,root) %{_libdir}/libshis*.so.*.*.*
+%dir %{_sysconfdir}/shishi
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shisa.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.keys
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.skel
+%attr(700,root,root) %dir %{_localstatedir}/%{name}
+%{_mandir}/man1/shisa.1*
 %{_mandir}/man1/shishi.1*
 %{_infodir}/shishi.info*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libshishi.so
-%{_libdir}/libshishi.la
-%{_includedir}/shishi*.h
+%attr(755,root,root) %{_libdir}/libshis*.so
+%{_libdir}/libshis*.la
+%{_includedir}/shis*.h
 %{_pkgconfigdir}/shishi.pc
 %{_mandir}/man3/*
-%{_gtkdocdir}/shishi
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libshishi.a
+%{_libdir}/libshis*.a
 
 %files -n pam-pam_shishi
 %defattr(644,root,root,755)
