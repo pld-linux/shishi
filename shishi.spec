@@ -4,7 +4,8 @@ Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
 Version:	0.0.0
-Release:	0.2
+Release:	0.3
+Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://savannah.nongnu.org/download/shishi/unstable.pkg/%{version}/%{name}-%{version}.tar.gz
@@ -105,16 +106,16 @@ Kerberized DARPA TELNET protocol server.
 %description telnetd -l pl
 Serwer skerberyzowanego protoko³u DARPA TELNET.
 
-%package -n pam_shishi
+%package -n pam-pam_shishi
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl):	Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
 Requires:	%{name} = %{version}
 
-%description -n pam_shishi
+%description -n pam-pam_shishi
 PAM module for RFC 1510 (Kerberos V5) authentication.
 
-%description -n pam_shishi -l pl
+%description -n pam-pam_shishi -l pl
 Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 
 %prep
@@ -185,6 +186,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/shishi-telnetd
 %{_mandir}/man8/shishi-telnetd.8*
 
-%files -n pam_shishi
+%files -n pam-pam_shishi
 %defattr(644,root,root,755)
 %attr(755,root,root) /lib/security/pam_shishi.so*
