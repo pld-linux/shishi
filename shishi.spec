@@ -222,6 +222,7 @@ fi
 %attr(755,root,root) %{_libdir}/libshis*.so.*.*.*
 %dir %{_sysconfdir}/shishi
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shisa.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.keys
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.skel
 %attr(700,root,root) %dir %{_localstatedir}/%{name}
@@ -244,7 +245,6 @@ fi
 %files shishid
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/shishid
-%attr(640,root,shishi) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
 %attr(754,root,root) /etc/rc.d/init.d/shishid
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/shishid
 %{_mandir}/man1/shishid.1*
