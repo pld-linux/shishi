@@ -1,0 +1,14 @@
+--- shishi-0.0.0/doc/shishi.texi.orig	2003-05-01 22:30:18.000000000 +0200
++++ shishi-0.0.0/doc/shishi.texi	2003-08-02 22:52:38.000000000 +0200
+@@ -40,9 +40,9 @@
+ @end quotation
+ @end copying
+ 
+-@dircategory Net Utilities
++@dircategory Net utilities:
+ @direntry
+-* shishi: (shishi).		An RFC 1510 implementation
++* shishi: (shishi).			An RFC 1510 implementation
+ @end direntry
+ 
+ @titlepage
