@@ -1,0 +1,13 @@
+# Customized settings for shishid
+
+# nice level for shishid
+SERVICE_RUN_NICE_LEVEL="+0"
+
+# sockets to listen for queries on
+# (in form [FAMILY:]ADDR:PORT/TYPE, default (when not specified) is:
+#  IPv4:*:kerberos/udp,IPv4:*:kerberos/tcp,
+#  IPv6:*:kerberos/udp,IPv6:*:kerberos/tcp)
+LISTEN=
+
+# other shishid options (e.g. --x509...)
+SHISHID_OPTIONS=
