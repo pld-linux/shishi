@@ -12,7 +12,7 @@ Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
-BuildRequires:	autoconf >= 2.57
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1.9
 BuildRequires:	gettext-devel >= 0.12.1
 BuildRequires:	gnutls-devel >= 1.0.0
