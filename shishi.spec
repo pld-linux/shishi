@@ -1,5 +1,4 @@
 # TODO:
-# - wait for libgcrypt 1.1.13, uncomment BR and remove marked files
 # - init scripts for shishid and shishi-telnetd
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
@@ -11,14 +10,16 @@ Group:		Libraries
 Source0:	http://savannah.nongnu.org/download/shishi/unstable.pkg/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	29441804f9e6f39f549d0dfe7bb25d3e
 Patch0:		%{name}-info.patch
+Patch1:		%{name}-libgcrypt.patch
 URL:		http://www.nongnu.org/shishi/
 BuildRequires:	gtk-doc >= 0.6
-# contains copy of libgcrypt 1.1.13-cvs
-#BuildRequires:	libgcrypt-devel >= 1.1.13
+BuildRequires:	libgcrypt-devel >= 1.1.42
 BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 0.2.0
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	texinfo
+Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libexecdir	%{_sbindir}
@@ -55,6 +56,10 @@ Summary:	Header files for Shishi library
 Summary(pl):	Pliki nag³ówkowe biblioteki Shishi
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	gtk-doc-common
+Requires:	libgcrypt-devel >= 1.1.42
+Requires:	libidn-devel >= 0.1.0
+Requires:	libtasn1-devel >= 0.2.0
 
 %description devel
 Header files for Shishi library.
@@ -113,6 +118,8 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -135,8 +142,13 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.{la,a}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+/sbin/ldconfig
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
+
+%postun
+/sbin/ldconfig
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -148,8 +160,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_mandir}/man1/shishi.1*
 %{_infodir}/shishi.info*
-# TODO: remove
-%attr(755,root,root) %{_libdir}/libgcrypt.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
@@ -158,18 +168,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/shishi.h
 %{_pkgconfigdir}/shishi.pc
 %{_gtkdocdir}/shishi
-# TODO: remove
-%attr(755,root,root) %{_libdir}/libgcrypt.so
-%{_libdir}/libgcrypt.la
-%{_includedir}/gcrypt.h
-%{_aclocaldir}/libgcrypt.m4
-%{_infodir}/gcrypt.info*
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libshishi.a
-# TODO: remove
-%{_libdir}/libgcrypt.a
 
 %files telnet
 %defattr(644,root,root,755)
