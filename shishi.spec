@@ -3,17 +3,18 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.13
+Version:	0.0.14
 Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	fd240f295f58b201112bfbac5fca4bcb
+# Source0-md5:	3801d2e8ca23b3ee8d72903e0be22a2f
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1.7
+BuildRequires:	gettext-devel >= 0.12.1
 BuildRequires:	gnutls-devel >= 1.0.0
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
@@ -62,7 +63,7 @@ centrum dystrybucji kluczy (KDC) tak¿e jest za³±czony.
 Summary:	Header files for Shishi library
 Summary(pl):	Pliki nag³ówkowe biblioteki Shishi
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gnutls-devel >= 0.8.8
 Requires:	gtk-doc-common
 Requires:	libgcrypt-devel >= 1.1.43
@@ -79,7 +80,7 @@ Pliki nag³ówkowe biblioteki Shishi.
 Summary:	Static Shishi library
 Summary(pl):	Statyczna biblioteka Shishi
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static Shishi library.
@@ -91,7 +92,7 @@ Statyczna biblioteka Shishi.
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl):	Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	pam_shishi
 
 %description -n pam-pam_shishi
