@@ -11,8 +11,6 @@ Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	49d854d20e9ebe7d85688eeb6e63859e
 Patch0:		%{name}-info.patch
-#Patch1:		%{name}-libgcrypt.patch
-#Patch2:		%{name}-libidn.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	gnutls-devel >= 0.8.8
 BuildRequires:	gtk-doc >= 0.6
