@@ -18,7 +18,6 @@ BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 0.2.5
 BuildRequires:	pam-devel
-BuildRequires:	pkgconfig
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
 # should be moved to shishi-enabled inetutils-* if such packages would exist
