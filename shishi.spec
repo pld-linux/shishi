@@ -1,15 +1,16 @@
-# TODO:
-# - init scripts for shishid
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
 Version:	0.0.14
-Release:	0.1
+Release:	1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	3801d2e8ca23b3ee8d72903e0be22a2f
+Source1:	%{name}-shishid.init
+Source2:	%{name}-shishid.sysconfig
+Source3:	%{name}-pl.po
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.57
@@ -88,6 +89,26 @@ Static Shishi library.
 %description static -l pl
 Statyczna biblioteka Shishi.
 
+%package shishid
+Summary:	shishid - Kerberos 5 server
+Summary(pl):	shishid - serwer Kerberosa 5
+Group:		Networking/Daemons
+Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/setsid
+Requires(post,postun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/userdel
+Requires(postun):	/usr/sbin/groupdel
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description shishid
+shishid is a network daemon for issuing Kerberos 5 tickets.
+
+%description shishid -l pl
+shishid to sieciowy demon s³u¿±cy do wydawania biletów Kerberosa 5.
+
 %package -n pam-pam_shishi
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl):	Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5)
@@ -104,6 +125,10 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
+
+cp -f %{SOURCE3} po/pl.po
+echo 'pl' >> po/LINGUAS
+rm -f po/stamp-po
 
 # we don't have libtool 1.5a
 %{__perl} -pi -e 's/AC_LIBTOOL_TAGS//' configure.ac
@@ -124,6 +149,7 @@ rm -f m4/libtool.m4
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{/%{_lib}/security,/etc/{sysconfig,rc.d/init.d}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -131,9 +157,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/%{_lib}/security
 mv -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.so* $RPM_BUILD_ROOT/%{_lib}/security
 rm -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.{la,a}
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/shishid
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/shishid
 
 %find_lang %{name}
 
@@ -148,22 +176,59 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
 
+%pre shishid
+if [ -n "`/usr/bin/getgid shishi`" ]; then
+	if [ "`getgid shishi`" != "125" ]; then
+		echo "Error: group shishi doesn't have gid=125. Correct this before installing shishid." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/groupadd -g 125 -r -f shishi
+fi
+if [ -n "`/bin/id -u shishi 2>/dev/null`" ]; then
+	if [ "`/bin/id -u shishi`" != "125" ]; then
+		echo "Error: user shishi doesn't have uid=125. Correct this before installing shishid." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/useradd -u 125 -r -d /usr/share/empty -s /bin/false -c "shishi user" -g shishi shishi 1>&2
+fi
+
+%post shishid
+/sbin/chkconfig --add shishid
+if [ -f /var/lock/subsys/shishid ]; then
+	/etc/rc.d/init.d/shishid restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/shishid start\" to start shishid daemon." >&2
+fi
+
+%preun shishid
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/shishid ]; then
+		/etc/rc.d/init.d/shishid stop >&2
+	fi
+	/sbin/chkconfig --del shishid
+fi
+
+%postun shishid
+if [ "$1" = "0" ]; then
+	/usr/sbin/userdel shishi
+	/usr/sbin/groupdel shishi
+fi
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README* THANKS
 %attr(755,root,root) %{_bindir}/shisa
 %attr(755,root,root) %{_bindir}/shishi
-%attr(755,root,root) %{_sbindir}/shishid
 %attr(755,root,root) %{_libdir}/libshis*.so.*.*.*
 %dir %{_sysconfdir}/shishi
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shisa.conf
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.keys
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.skel
 %attr(700,root,root) %dir %{_localstatedir}/%{name}
 %{_mandir}/man1/shisa.1*
 %{_mandir}/man1/shishi.1*
-%{_mandir}/man1/shishid.1*
 %{_infodir}/shishi.info*
 
 %files devel
@@ -177,6 +242,14 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libshis*.a
+
+%files shishid
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/shishid
+%attr(640,root,shishi) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
+%attr(754,root,root) /etc/rc.d/init.d/shishid
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/shishid
+%{_mandir}/man1/shishid.1*
 
 %files -n pam-pam_shishi
 %defattr(644,root,root,755)
