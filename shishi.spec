@@ -11,6 +11,7 @@ Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
+Patch1:		%{name}-pl.po-update.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1.9
@@ -126,6 +127,9 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
+rm -f po/stamp-po
 
 # we don't have libtool 1.5a
 %{__perl} -pi -e 's/AC_LIBTOOL_TAGS//' configure.ac
