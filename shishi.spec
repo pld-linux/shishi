@@ -3,13 +3,13 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.10
+Version:	0.0.11
 Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	ed33acbf9fdd1f76edf522afcaebb94f
+# Source0-md5:	8095b3ce92f57735026e0eafe6bd0664
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.59
@@ -130,8 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/lib/security
-mv -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.so* $RPM_BUILD_ROOT/lib/security
+install -d $RPM_BUILD_ROOT/%{_lib}/security
+mv -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.so* $RPM_BUILD_ROOT/%{_lib}/security
 rm -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.{la,a}
 
 %find_lang %{name}
@@ -179,4 +179,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n pam-pam_shishi
 %defattr(644,root,root,755)
-%attr(755,root,root) /lib/security/pam_shishi.so*
+%attr(755,root,root) /%{_lib}/security/pam_shishi.so*
