@@ -61,7 +61,7 @@ centrum dystrybucji kluczy (KDC) tak¿e jest za³±czony.
 Summary:	Header files for Shishi library
 Summary(pl):	Pliki nag³ówkowe biblioteki Shishi
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 Requires:	gnutls-devel >= 0.8.8
 Requires:	gtk-doc-common
 Requires:	libgcrypt-devel >= 1.1.43
@@ -78,7 +78,7 @@ Pliki nag³ówkowe biblioteki Shishi.
 Summary:	Static Shishi library
 Summary(pl):	Statyczna biblioteka Shishi
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description static
 Static Shishi library.
@@ -90,7 +90,7 @@ Statyczna biblioteka Shishi.
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl):	Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 Obsoletes:	pam_shishi
 
 %description -n pam-pam_shishi
