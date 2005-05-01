@@ -180,23 +180,8 @@ rm -rf $RPM_BUILD_ROOT
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
 
 %pre shishid
-if [ -n "`/usr/bin/getgid shishi`" ]; then
-	if [ "`/usr/bin/getgid shishi`" != "125" ]; then
-		echo "Error: group shishi doesn't have gid=125. Correct this before installing shishi-shishid." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/groupadd -g 125 shishi 1>&2
-fi
-if [ -n "`/bin/id -u shishi 2>/dev/null`" ]; then
-	if [ "`/bin/id -u shishi`" != "125" ]; then
-		echo "Error: user shishi doesn't have uid=125. Correct this before installing shishi-shishid." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/useradd -u 125 -d /usr/share/empty -s /bin/false \
-		-c "shishi user" -g shishi shishi 1>&2
-fi
+%groupadd -P %{name}-shishid -g 125 shishi
+%useradd -P %{name}-shishid -u 125 -d /usr/share/empty -s /bin/false -c "shishi user" -g shishi shishi
 
 %post shishid
 /sbin/chkconfig --add shishid
