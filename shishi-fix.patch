@@ -1,0 +1,11 @@
+--- shishi-0.0.22/src/kdc.h.orig	2005-08-13 12:27:45.008966000 +0200
++++ shishi-0.0.22/src/kdc.h	2005-08-13 12:40:35.973761936 +0200
+@@ -169,7 +169,7 @@
+ #define DH_BITS 1024
+ extern gnutls_dh_params dh_params;
+ extern gnutls_anon_server_credentials anoncred;
+-extern gnutls_anon_server_credentials x509cred;
++extern gnutls_certificate_credentials x509cred;
+ #endif
+ 
+ /* Interface between shishid.c and server.c. */
