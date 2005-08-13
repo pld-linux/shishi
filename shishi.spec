@@ -12,6 +12,7 @@ Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-gnutls.patch
+Patch2:		%{name}-fix.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.9
@@ -128,13 +129,9 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 rm -f po/stamp-po
-
-# we don't have libtool 1.5a
-%{__perl} -pi -e 's/AC_LIBTOOL_TAGS//' configure.ac
-# incompatible with ksh
-rm -f m4/libtool.m4
 
 # doesn't build on sparc (too few B* constants) and wasn't packaged anyway
 %{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
