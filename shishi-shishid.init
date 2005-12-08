@@ -28,7 +28,6 @@ fi
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network ]; then
-		# nls "ERROR: Networking is down. %s can't be run." shishid
 		msg_network_down shishid
 		exit 1
 	fi
@@ -41,7 +40,6 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/shishid ]; then
-		# show "Starting %s service" shishid
 		msg_starting shishid
 		busy
 		# daemon shishid -q -u shishi $SHISHID_OPTIONS
@@ -58,19 +56,16 @@ case "$1" in
 		fi
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/shishid
 	else
-		# show "%s service is already running." shishid
 		msg_already_running shishid
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/shishid ]; then
 		# Stop daemons.
-		# show "Stopping %s service" shishid
 		msg_stopping shishid
 		killproc shishid
 		rm -f /var/lock/subsys/shishid
 	else
-		# show "%s service is not running." shishid
 		msg_not_running shishid
 	fi
 	;;
@@ -82,12 +77,10 @@ case "$1" in
 # not supported (yet?)
 #  reload)
 #	if [ -f /var/lock/subsys/shishid ]; then
-#		# show "Reload %s service" shishid
 #		msg_reloading shishid
 #		killproc shishid -HUP
 #		RETVAL=$?
 #	else
-#		# show "%s service is not running." shishid
 #		msg_not_running shishid >&2
 #		RETVAL=7
 #	fi
@@ -101,7 +94,6 @@ case "$1" in
 	RETVAL=$?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
 esac
