@@ -43,8 +43,8 @@ used to authenticate users in distributed systems.
 Shishi contains a library ('libshishi') that can be used by
 application developers to add support for RFC 1510 and a command line
 utility ('shishi') that is used by users to interface with the
-library, to acquire and manage tickets (and more). Included are also
-a TELNET client and server (based on GNU InetUtils) for remote network
+library, to acquire and manage tickets (and more). Included are also a
+TELNET client and server (based on GNU InetUtils) for remote network
 login, and a PAM module for host security. A rudimentary key
 distribution center (KDC) daemon is included.
 
@@ -95,13 +95,13 @@ Statyczna biblioteka Shishi.
 Summary:	shishid - Kerberos 5 server
 Summary(pl):	shishid - serwer Kerberosa 5
 Group:		Networking/Daemons
-Requires(pre):	/bin/id
-Requires(pre):	/usr/bin/getgid
-Requires(pre):	/usr/sbin/useradd
-Requires(pre):	/usr/sbin/groupadd
 Requires(post,postun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description shishid
@@ -207,10 +207,10 @@ fi
 %attr(755,root,root) %{_bindir}/shishi
 %attr(755,root,root) %{_libdir}/libshis*.so.*.*.*
 %dir %{_sysconfdir}/shishi
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shisa.conf
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.conf
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.keys
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/shishi/shishi.skel
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shisa.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.keys
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.skel
 %attr(700,root,root) %dir %{_localstatedir}/%{name}
 %{_mandir}/man1/shisa.1*
 %{_mandir}/man1/shishi.1*
@@ -232,7 +232,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/shishid
 %attr(754,root,root) /etc/rc.d/init.d/shishid
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/shishid
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/shishid
 %{_mandir}/man1/shishid.1*
 
 %files -n pam-pam_shishi
