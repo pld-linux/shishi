@@ -2,7 +2,7 @@ Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
 Version:	0.0.22
-Release:	2
+Release:	3
 Epoch:		0
 License:	GPL
 Group:		Libraries
@@ -22,7 +22,7 @@ BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 0.2.5
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
 Provides:	group(shishi)
@@ -96,6 +96,7 @@ Summary:	shishid - Kerberos 5 server
 Summary(pl):	shishid - serwer Kerberosa 5
 Group:		Networking/Daemons
 Requires(post,postun):	/sbin/chkconfig
+Requires(post,preun):	rc-scripts
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
@@ -160,6 +161,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.{la,a}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/shishid
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/shishid
+rm -f $RPM_BUILD_ROOT%{_datadir}/info/dir
 
 %find_lang %{name}
 
@@ -180,17 +182,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post shishid
 /sbin/chkconfig --add shishid
-if [ -f /var/lock/subsys/shishid ]; then
-	/etc/rc.d/init.d/shishid restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/shishid start\" to start shishid daemon." >&2
-fi
+%service shishid restart "shishid daemon"
 
 %preun shishid
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/shishid ]; then
-		/etc/rc.d/init.d/shishid stop >&2
-	fi
+	%service shishid stop
 	/sbin/chkconfig --del shishid
 fi
 
