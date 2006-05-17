@@ -1,21 +1,21 @@
---- shishi-0.0.8/doc/shishi.texi.orig	2003-10-02 03:39:38.000000000 +0200
-+++ shishi-0.0.8/doc/shishi.texi	2003-11-25 08:18:49.894430168 +0100
-@@ -33,14 +33,14 @@
+--- shishi-0.0.24/doc/shishi.texi.orig	2006-04-20 21:16:08.000000000 +0200
++++ shishi-0.0.24/doc/shishi.texi	2006-04-23 12:01:36.012072000 +0200
+@@ -27,14 +27,14 @@
  @end quotation
  @end copying
- 
--@dircategory GNU Libraries
-+@dircategory Libraries:
- @direntry
--* libshishi: (shishi).		Library implementing Kerberos 5.
-+* libshishi: (shishi).			Library implementing Kerberos 5
- @end direntry
  
 -@dircategory GNU utilities
 +@dircategory Net utilities:
  @direntry
 -* shishi: (shishi).		A Kerberos 5 implementation
 +* shishi: (shishi).			A Kerberos 5 implementation
+ @end direntry
+ 
+-@dircategory GNU Libraries
++@dircategory Libraries:
+ @direntry
+-* libshishi: (shishi).		Library implementing Kerberos 5.
++* libshishi: (shishi).			Library implementing Kerberos 5
  @end direntry
  
  @titlepage
