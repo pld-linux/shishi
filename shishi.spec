@@ -1,25 +1,26 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.22
-Release:	3
+Version:	0.0.26
+Release:	1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	f613e538ed0bb990f3644bbe5f0ab444
+# Source0-md5:	e46273fa793873aa6509eab7a736825b
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
+Patch1:		%{name}-pl.po-update.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.9
-BuildRequires:	gettext-devel >= 0.12.1
+BuildRequires:	gettext-devel >= 0.14.1
 BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
-BuildRequires:	libtasn1-devel >= 0.2.5
+BuildRequires:	libtasn1-devel >= 0.3.1
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -67,11 +68,11 @@ Summary:	Header files for Shishi library
 Summary(pl):	Pliki nag³ówkowe biblioteki Shishi
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gnutls-devel >= 0.8.8
+Requires:	gnutls-devel >= 1.2.5
 Requires:	gtk-doc-common
 Requires:	libgcrypt-devel >= 1.1.43
 Requires:	libidn-devel >= 0.1.0
-Requires:	libtasn1-devel >= 0.2.5
+Requires:	libtasn1-devel >= 0.3.1
 
 %description devel
 Header files for Shishi library.
@@ -127,6 +128,7 @@ Modu³ PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 rm -f po/stamp-po
 
@@ -134,14 +136,15 @@ rm -f po/stamp-po
 %{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
 
 %build
-# blegh, lt incompatible with ksh - must rebuild
 %{__libtoolize}
 %{__aclocal} -I gl/m4 -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
-	--with-libgcrypt
+	--with-pam-dir=/%{_lib}/security
+# doesn't build with gnulib based on libgcrypt (relies on gnulib arcfour code)
+#	--with-libgcrypt
 
 %{__make}
 %{__make} extra
@@ -156,8 +159,7 @@ install -d $RPM_BUILD_ROOT{/%{_lib}/security,/etc/{sysconfig,rc.d/init.d}}
 %{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.so* $RPM_BUILD_ROOT/%{_lib}/security
-rm -f $RPM_BUILD_ROOT%{_libdir}/pam_shishi.{la,a}
+rm -f $RPM_BUILD_ROOT/%{_lib}/security/pam_shishi.{la,a}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/shishid
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/shishid
