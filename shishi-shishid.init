@@ -81,7 +81,7 @@ case "$1" in
 #		killproc shishid -HUP
 #		RETVAL=$?
 #	else
-#		msg_not_running shishid >&2
+#		msg_not_running shishid
 #		RETVAL=7
 #	fi
 #	;;
