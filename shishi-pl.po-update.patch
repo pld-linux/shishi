@@ -1,15 +1,15 @@
---- shishi-0.0.27/po/pl.po.orig	2006-09-15 17:28:31.000000000 +0200
-+++ shishi-0.0.27/po/pl.po	2006-09-18 00:27:35.978200750 +0200
+--- shishi-0.0.30/po/pl.po.orig	2006-11-01 16:00:17.000000000 +0100
++++ shishi-0.0.30/po/pl.po	2006-11-13 23:17:40.903949750 +0100
 @@ -5,30 +5,28 @@
  #
  msgid ""
  msgstr ""
 -"Project-Id-Version: shishi 0.0.24\n"
-+"Project-Id-Version: shishi 0.0.27\n"
++"Project-Id-Version: shishi 0.0.30\n"
  "Report-Msgid-Bugs-To: bug-shishi@josefsson.org\n"
- "POT-Creation-Date: 2006-09-15 17:15+0200\n"
+ "POT-Creation-Date: 2006-11-01 15:57+0100\n"
 -"PO-Revision-Date: 2006-04-23 10:20+0200\n"
-+"PO-Revision-Date: 2006-09-18 00:20+0200\n"
++"PO-Revision-Date: 2006-11-13 23:15+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "MIME-Version: 1.0\n"
@@ -37,16 +37,20 @@
  
  msgid "Memory allocation error in shishi library."
  msgstr "B³±d przydzielania pamiêci w bibliotece shishi."
-@@ -118,7 +116,7 @@
+@@ -118,10 +116,10 @@
  "oznacza to b³±d wewnêtrzny aplikacji."
  
  msgid "Failed to parse keytab file"
 -msgstr ""
 +msgstr "Nie uda³o siê przeanalizowaæ pliku keytab"
  
+ msgid "Failed to parse credential cache file"
+-msgstr ""
++msgstr "Nie uda³o siê przeanalizowaæ pliku cache'a danych uwierzytelniaj±cych"
+ 
  msgid "Unknown error"
  msgstr "Nieznany b³±d"
-@@ -600,7 +598,7 @@
+@@ -603,7 +601,7 @@
  msgid "Removing key from `%s@%s'...done\n"
  msgstr "Usuwanie klucza z `%s@%s'... zakoñczone\n"
  
@@ -55,7 +59,7 @@
  msgid ""
  "\n"
  "Mandatory arguments to long options are mandatory for short options too.\n"
-@@ -608,84 +606,72 @@
+@@ -611,84 +609,72 @@
  "Report bugs to <%s>.\n"
  msgstr ""
  "\n"
