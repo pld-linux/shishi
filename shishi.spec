@@ -1,13 +1,13 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.27
+Version:	0.0.30
 Release:	1
 Epoch:		0
 License:	GPL
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	a29fc8bf3e3d2077cd55deb66258a884
+# Source0-md5:	aa89eea3400f2de5cab07f929048f16e
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
@@ -142,9 +142,8 @@ rm -f po/stamp-po
 %{__autoheader}
 %{__automake}
 %configure \
+	--with-libgcrypt \
 	--with-pam-dir=/%{_lib}/security
-# doesn't build with gnulib based on libgcrypt (relies on gnulib arcfour code)
-#	--with-libgcrypt
 
 %{__make}
 %{__make} extra
@@ -201,6 +200,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README* THANKS
+%attr(755,root,root) %{_bindir}/ccache2shishi
 %attr(755,root,root) %{_bindir}/shisa
 %attr(755,root,root) %{_bindir}/shishi
 %attr(755,root,root) %{_sbindir}/keytab2shishi
@@ -211,6 +211,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.keys
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.skel
 %attr(700,root,root) %dir %{_localstatedir}/%{name}
+%{_mandir}/man1/ccache2shishi.1*
 %{_mandir}/man1/keytab2shishi.1*
 %{_mandir}/man1/shisa.1*
 %{_mandir}/man1/shishi.1*
