@@ -1,5 +1,5 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
-Summary(pl.UTF-8):   Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
+Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
 Version:	0.0.30
 Release:	2
@@ -65,7 +65,7 @@ centrum dystrybucji kluczy (KDC) także jest załączony.
 
 %package devel
 Summary:	Header files for Shishi library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki Shishi
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Shishi
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gnutls-devel >= 1.2.5
@@ -82,7 +82,7 @@ Pliki nagłówkowe biblioteki Shishi.
 
 %package static
 Summary:	Static Shishi library
-Summary(pl.UTF-8):   Statyczna biblioteka Shishi
+Summary(pl.UTF-8):	Statyczna biblioteka Shishi
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -94,7 +94,7 @@ Statyczna biblioteka Shishi.
 
 %package shishid
 Summary:	shishid - Kerberos 5 server
-Summary(pl.UTF-8):   shishid - serwer Kerberosa 5
+Summary(pl.UTF-8):	shishid - serwer Kerberosa 5
 Group:		Networking/Daemons
 Requires(post,postun):	/sbin/chkconfig
 Requires(post,preun):	rc-scripts
@@ -114,7 +114,7 @@ shishid to sieciowy demon służący do wydawania biletów Kerberosa 5.
 
 %package -n pam-pam_shishi
 Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
-Summary(pl.UTF-8):   Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5)
+Summary(pl.UTF-8):	Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	pam_shishi
