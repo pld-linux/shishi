@@ -4,7 +4,7 @@ Name:		shishi
 Version:	0.0.32
 Release:	1
 Epoch:		0
-License:	GPL
+License:	GPL v3+
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	9ebefe94943ec4336303dfd1e7cc6755
