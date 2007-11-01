@@ -1,20 +1,20 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.32
+Version:	0.0.33
 Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://josefsson.org/shishi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	9ebefe94943ec4336303dfd1e7cc6755
+# Source0-md5:	2c94e2223d544742d54b96b23cdf6bc0
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
 URL:		http://josefsson.org/shishi/
-BuildRequires:	autoconf >= 2.60
-BuildRequires:	automake >= 1:1.9
-BuildRequires:	gettext-devel >= 0.14.1
+BuildRequires:	autoconf >= 2.61
+BuildRequires:	automake >= 1:1.10
+BuildRequires:	gettext-devel >= 0.16.1
 BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
