@@ -146,7 +146,7 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/%{_lib}/security,/etc/{sysconfig,rc.d/init.d}}
+install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -200,7 +200,10 @@ fi
 %attr(755,root,root) %{_bindir}/shisa
 %attr(755,root,root) %{_bindir}/shishi
 %attr(755,root,root) %{_sbindir}/keytab2shishi
-%attr(755,root,root) %{_libdir}/libshis*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libshisa.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libshisa.so.0
+%attr(755,root,root) %{_libdir}/libshishi.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libshishi.so.0
 %dir %{_sysconfdir}/shishi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shisa.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/shishi/shishi.conf
@@ -215,15 +218,20 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libshis*.so
-%{_libdir}/libshis*.la
-%{_includedir}/shis*.h
+%attr(755,root,root) %{_libdir}/libshisa.so
+%attr(755,root,root) %{_libdir}/libshishi.so
+%{_libdir}/libshisa.la
+%{_libdir}/libshishi.la
+%{_includedir}/shisa.h
+%{_includedir}/shishi*.h
 %{_pkgconfigdir}/shishi.pc
-%{_mandir}/man3/*
+%{_mandir}/man3/shisa*.3*
+%{_mandir}/man3/shishi*.3*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libshis*.a
+%{_libdir}/libshisa.a
+%{_libdir}/libshishi.a
 
 %files shishid
 %defattr(644,root,root,755)
@@ -234,4 +242,4 @@ fi
 
 %files -n pam-pam_shishi
 %defattr(644,root,root,755)
-%attr(755,root,root) /%{_lib}/security/pam_shishi.so*
+%attr(755,root,root) /%{_lib}/security/pam_shishi.so
