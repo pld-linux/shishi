@@ -1,0 +1,50 @@
+--- shishi-0.0.34/po/pl.po.orig	2008-01-16 17:59:04.000000000 +0100
++++ shishi-0.0.34/po/pl.po	2008-01-16 22:27:39.313947290 +0100
+@@ -1,14 +1,14 @@
+ # Polish translation for shishi.
+-# Copyright (C) 2004, 2006, 2007 Free Software Foundation, Inc.
++# Copyright (C) 2004, 2006, 2007, 2008 Free Software Foundation, Inc.
+ # This file is distributed under the same license as the shishi package.
+-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2007.
++# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2008.
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: shishi 0.0.30\n"
++"Project-Id-Version: shishi 0.0.34\n"
+ "Report-Msgid-Bugs-To: bug-shishi@josefsson.org\n"
+ "POT-Creation-Date: 2008-01-16 17:59+0100\n"
+-"PO-Revision-Date: 2006-11-13 23:15+0100\n"
++"PO-Revision-Date: 2008-01-16 21:50+0100\n"
+ "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
+ "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+ "MIME-Version: 1.0\n"
+@@ -518,9 +518,9 @@
+ "Nie uda³o siê utworzyæ klucza (%d):\n"
+ "%s"
+ 
+-#, fuzzy, c-format
++#, c-format
+ msgid "Try `%s --help' for more information.\n"
+-msgstr "`%s --help' poda wiêcej informacji."
++msgstr "`%s --help' poda wiêcej informacji.\n"
+ 
+ #. TRANSLATORS: The placeholder indicates the bug-reporting address
+ #. for this package.  Please add _another line_ saying
+@@ -673,16 +673,3 @@
+ #, c-format
+ msgid "Could not get ticket as `%s' for `%s'."
+ msgstr "Nie uda³o siê pobraæ biletu jako `%s' dla `%s'."
+-
+-#~ msgid ""
+-#~ "\n"
+-#~ "Mandatory arguments to long options are mandatory for short options too.\n"
+-#~ "\n"
+-#~ msgstr ""
+-#~ "\n"
+-#~ "Argumenty obowi±zkowe dla opcji d³ugich s± obowi±zkowe tak¿e dla opcji "
+-#~ "krótkich.\n"
+-#~ "\n"
+-
+-#~ msgid "Report bugs to <%s>.\n"
+-#~ msgstr "B³êdy proszê zg³aszaæ na adres <%s>.\n"
