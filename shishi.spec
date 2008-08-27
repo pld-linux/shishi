@@ -6,7 +6,7 @@ Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
-Source0:	http://ftp.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
+Source0:	http://alpha.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
 # Source0-md5:	f5291b727621e46a395797f0a6816c31
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
