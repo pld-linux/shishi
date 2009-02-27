@@ -1,13 +1,13 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.37
+Version:	0.0.38
 Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://alpha.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	f5291b727621e46a395797f0a6816c31
+# Source0-md5:	f947838fb3e94664b2c55db2414bc2de
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
@@ -134,7 +134,7 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 
 %build
 %{__libtoolize}
-%{__aclocal} -I gl/m4 -I m4
+%{__aclocal} -I gl/m4 -I src/gl/m4 -I db/gl/m4 -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
