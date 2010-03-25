@@ -1,13 +1,13 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.39
+Version:	0.0.42
 Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://alpha.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	a10a0d34494257ee4fdb767ad9b8c4ac
+# Source0-md5:	aca127c56de9b4c9deef34578acf5b46
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
@@ -19,13 +19,13 @@ BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
-BuildRequires:	libtasn1-devel >= 1.4
+BuildRequires:	libtasn1-devel >= 1.7
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
-Requires:	libtasn1 >= 1.4
+Requires:	libtasn1 >= 1.7
 Provides:	group(shishi)
 Provides:	user(shishi)
 # should be moved to shishi-enabled inetutils-* if such packages would exist
@@ -72,7 +72,7 @@ Requires:	gnutls-devel >= 1.2.5
 Requires:	gtk-doc-common
 Requires:	libgcrypt-devel >= 1.1.43
 Requires:	libidn-devel >= 0.1.0
-Requires:	libtasn1-devel >= 1.4
+Requires:	libtasn1-devel >= 1.7
 
 %description devel
 Header files for Shishi library.
