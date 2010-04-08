@@ -1,13 +1,13 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	0.0.42
+Version:	0.0.43
 Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://alpha.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	aca127c56de9b4c9deef34578acf5b46
+# Source0-md5:	ee2e4d122d27c312c07d8ab6ec65da6e
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
