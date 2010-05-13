@@ -16,12 +16,12 @@ BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-devel >= 0.17
 BuildRequires:	gnutls-devel >= 1.2.5
-BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
 BuildRequires:	libtasn1-devel >= 1.7
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
