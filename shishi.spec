@@ -1,33 +1,32 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	1.0.0
-Release:	4
+Version:	1.0.1
+Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	e6536784d7181e6bcb848ee259dd56c7
+# Source0-md5:	25c3d61fe62e1eaf0d730c2e7b5e1375
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-gnutls.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.10
-BuildRequires:	gettext-devel >= 0.17
+BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
 BuildRequires:	libidn-devel >= 0.1.0
-BuildRequires:	libtasn1-devel >= 1.7
+BuildRequires:	libtasn1-devel >= 2.11
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
-Requires:	libtasn1 >= 1.7
+Requires:	libtasn1 >= 2.11
 Provides:	group(shishi)
 Provides:	user(shishi)
 # should be moved to shishi-enabled inetutils-* if such packages would exist
@@ -74,7 +73,7 @@ Requires:	gnutls-devel >= 1.2.5
 Requires:	gtk-doc-common
 Requires:	libgcrypt-devel >= 1.1.43
 Requires:	libidn-devel >= 0.1.0
-Requires:	libtasn1-devel >= 1.7
+Requires:	libtasn1-devel >= 2.11
 
 %description devel
 Header files for Shishi library.
@@ -130,7 +129,6 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 # doesn't build on sparc (too few B* constants) and wasn't packaged anyway
 %{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
@@ -142,6 +140,7 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %{__autoheader}
 %{__automake}
 %configure \
+	--disable-silent-rules \
 	--with-libgcrypt \
 	--with-pam-dir=/%{_lib}/security
 
@@ -158,7 +157,7 @@ install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d}
 %{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT/%{_lib}/security/pam_shishi.{la,a}
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_shishi.{la,a}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/shishid
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/shishid
