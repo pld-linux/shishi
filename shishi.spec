@@ -13,6 +13,7 @@ Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-am.patch
 Patch2:		%{name}-glibc2.16.patch
+Patch3:		%{name}-glibc2.16.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.10
@@ -133,6 +134,7 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # doesn't build on sparc (too few B* constants) and wasn't packaged anyway
 %{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
