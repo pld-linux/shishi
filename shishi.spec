@@ -13,7 +13,7 @@ Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-am.patch
 Patch2:		%{name}-glibc2.16.patch
-Patch3:		%{name}-glibc2.16.patch
+Patch3:		%{name}-libtasn1-3.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.10
