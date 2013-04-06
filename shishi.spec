@@ -1,22 +1,19 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	1.0.1
-Release:	2
+Version:	1.0.2
+Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	25c3d61fe62e1eaf0d730c2e7b5e1375
+# Source0-md5:	4dace6fdc67dec508ed75b852d316e64
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-am.patch
-Patch2:		%{name}-glibc2.16.patch
-Patch3:		%{name}-libtasn1-3.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake >= 1:1.10
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
@@ -132,9 +129,6 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 # doesn't build on sparc (too few B* constants) and wasn't packaged anyway
 %{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
@@ -163,7 +157,7 @@ install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d}
 %{__make} -C extra install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_shishi.{la,a}
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_shishi.la
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/shishid
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/shishid
