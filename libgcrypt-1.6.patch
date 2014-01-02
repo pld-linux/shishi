@@ -1,0 +1,15 @@
+--- shishi-1.0.2/gl/m4/gc.m4~	2013-04-03 00:48:10.000000000 +0200
++++ shishi-1.0.2/gl/m4/gc.m4	2014-01-02 17:26:39.579388941 +0100
+@@ -9,12 +9,6 @@
+   if test "$libgcrypt" != no; then
+     AC_LIB_HAVE_LINKFLAGS([gcrypt], [gpg-error], [
+ #include <gcrypt.h>
+-/* GCRY_MODULE_ID_USER was added in 1.4.4 and gc-libgcrypt.c
+-   will fail on startup if we don't have 1.4.4 or later, so
+-   test for it early. */
+-#if !defined GCRY_MODULE_ID_USER
+-error too old libgcrypt
+-#endif
+ ])
+   fi
+ ])
