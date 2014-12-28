@@ -15,7 +15,7 @@ Patch1:		libgcrypt-1.6.patch
 URL:		http://josefsson.org/shishi/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	gettext-devel >= 0.18.1
+BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	gnutls-devel >= 1.2.5
 BuildRequires:	gtk-doc >= 1.1
 BuildRequires:	libgcrypt-devel >= 1.1.43
