@@ -1,0 +1,11 @@
+PAM module no longer compiles in static mode.
+--- shishi-1.0.2/extra/pam_shishi/Makefile.am.orig	2013-04-03 10:31:20.000000000 +0200
++++ shishi-1.0.2/extra/pam_shishi/Makefile.am	2017-04-10 17:41:58.205488834 +0200
+@@ -28,6 +28,7 @@
+ pam_shishi_la_LIBADD = ../../lib/libshishi.la
+ # XXX add -Wl,-x too?  PAM documentation suggests it.
+ pam_shishi_la_LDFLAGS = -module -shared -avoid-version
++pam_shishi_la_CFLAGS = -shared
+ 
+ # -DDEBUG_PAM
+ DEFS = @DEFS@
