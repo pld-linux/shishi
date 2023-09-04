@@ -1,19 +1,18 @@
 Summary:	Shishi - an implementation of RFC 1510(bis) (Kerberos V5 authentication)
 Summary(pl.UTF-8):	Shishi - implementacja RFC 1510(bis) (uwierzytelniania Kerberos V5)
 Name:		shishi
-Version:	1.0.2
-Release:	6
+Version:	1.0.3
+Release:	1
 Epoch:		0
 License:	GPL v3+
 Group:		Libraries
-Source0:	http://ftp.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
-# Source0-md5:	4dace6fdc67dec508ed75b852d316e64
+Source0:	https://ftp.gnu.org/gnu/shishi/%{name}-%{version}.tar.gz
+# Source0-md5:	b0189e3a756bf9a93edfb45c0a250151
 Source1:	%{name}-shishid.init
 Source2:	%{name}-shishid.sysconfig
 Patch0:		%{name}-info.patch
-Patch1:		libgcrypt-1.6.patch
 Patch2:		%{name}-pam.patch
-URL:		http://josefsson.org/shishi/
+URL:		http://www.gnu.org/software/shishi/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools >= 0.18.1
@@ -32,8 +31,8 @@ Requires:	libtasn1 >= 2.11
 Provides:	group(shishi)
 Provides:	user(shishi)
 # should be moved to shishi-enabled inetutils-* if such packages would exist
-Obsoletes:	shishi-telnet
-Obsoletes:	shishi-telnetd
+Obsoletes:	shishi-telnet < 0:0.0.8
+Obsoletes:	shishi-telnetd < 0:0.0.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libexecdir	%{_sbindir}
@@ -120,7 +119,7 @@ Summary:	PAM module for RFC 1510 (Kerberos V5) authentication
 Summary(pl.UTF-8):	Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5)
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:	pam_shishi
+Obsoletes:	pam_shishi < 0:0.0.0-1
 
 %description -n pam-pam_shishi
 PAM module for RFC 1510 (Kerberos V5) authentication.
@@ -131,15 +130,11 @@ Moduł PAM do uwierzytelniania RFC 1510 (Kerberos V5).
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
-
-# doesn't build on sparc (too few B* constants) and wasn't packaged anyway
-%{__perl} -pi -e 's/^(SUBDIRS.*) rsh-redone/$1/' extra/Makefile.am
 
 %build
 %{__libtoolize}
-%{__aclocal} -I gl/m4 -I src/gl/m4 -I db/gl/m4 -I m4
+%{__aclocal} -I m4 -I lib/gl/m4 -I src/gl/m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
